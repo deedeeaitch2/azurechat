@@ -38,7 +38,8 @@ export const GetDefaultExtensions = async (props: {
     },
   });
 
-  // Add any other default Extension here
+    // Add any other default Extension here
+
 
   return {
     status: "OK",
@@ -121,5 +122,7 @@ async function executeCreateImage(
         error +
         "Return this message to the user and halt execution.",
     };
-  }
+    }
+
 }
+

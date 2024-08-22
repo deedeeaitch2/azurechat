@@ -14,6 +14,8 @@ import {
 } from "@/features/extensions-page/extension-services/models";
 import { RunnableToolFunction } from "openai/lib/RunnableFunction";
 import { ToolsInterface } from "../models";
+import { uniqueId } from "@/features/common/util";
+import { request } from "http";
 export const GetDynamicExtensions = async (props: {
   extensionIds: string[];
 }): Promise<ServerActionResponse<Array<any>>> => {
@@ -101,10 +103,15 @@ async function executeFunction(props: {
     );
 
     // replace the query parameters
+    console.log("args: ", args)
+    console.log("args query: ", args.query)
     if (args.query) {
       for (const key in args.query) {
+        console.log("Key: ", key)
         const value = args.query[key];
-        functionModel.endpoint = functionModel.endpoint.replace(
+        console.log("Key value: ", value)
+
+          functionModel.endpoint = functionModel.endpoint.replace(
           `${key}`,
           value
         );
@@ -119,14 +126,26 @@ async function executeFunction(props: {
 
     if (args.body) {
       requestInit.body = JSON.stringify(args.body);
-    }
-
+      }
+    console.log("Endpoint: ", functionModel.endpoint)
     const response = await fetch(functionModel.endpoint, requestInit);
 
     if (!response.ok) {
       return `There was an error calling the api: ${response.statusText}`;
-    }
-    const result = await response.json();
+      }
+
+      var tmpresult = {}
+      const contenttypeheader = response.headers.get("Content-Type")
+      console.log("Content-Type Header: ", contenttypeheader)
+      if (contenttypeheader && contenttypeheader.includes("image/png")) {
+          tmpresult = {
+              url: functionModel.endpoint,
+          };
+      }
+      else {
+          tmpresult = await response.json();
+      }
+      const result = tmpresult
 
     return {
       id: functionModel.id,

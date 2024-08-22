@@ -1,5 +1,5 @@
-export const AI_NAME = "Azure Chat";
-export const AI_DESCRIPTION = "Azure Chat is a friendly AI assistant.";
+export const AI_NAME = "Police AI Assistant";
+export const AI_DESCRIPTION = "This Police AI Assistant will provide answers to general questions, can interrogate and analyse files, call out to third-party systems to retrieve crime, map and vehicle data, summarise Internet search results and generate images based on a prompt. ";
 export const CHAT_DEFAULT_PERSONA = AI_NAME + " default";
 
 export const CHAT_DEFAULT_SYSTEM_PROMPT = `You are a friendly ${AI_NAME} AI assistant. You must always return in markdown format.

@@ -105,6 +105,8 @@ export const CreateExtension = async (
       headers: inputModel.headers,
     };
 
+    console.log('Hello Dan')
+
     const validatedFields = validateSchema(modelToSave);
 
     if (validatedFields.status === "OK") {
